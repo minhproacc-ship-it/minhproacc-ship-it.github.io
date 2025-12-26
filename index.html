@@ -3,27 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <title>File Share</title>
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      margin-top: 80px;
-    }
-    button {
-      padding: 12px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
 </head>
 <body>
 
-  <h1>📁 Website chia sẻ file</h1>
-  <p>Bạn cần đăng nhập để tải file</p>
+<h1>📁 Website chia sẻ file</h1>
 
-  <button disabled>Đăng nhập Google</button><br><br>
-  <button disabled>Đăng nhập Facebook</button><br><br>
-  <button disabled>Đăng nhập Microsoft</button>
+<button onclick="login()">Đăng nhập Google</button>
+<p id="user"></p>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAf5AunBc2HllEVqN9e2qm6hTwVYXYjJZU",
+    authDomain: "fileshare-f7990.firebaseapp.com",
+    projectId: "fileshare-f7990"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  window.login = () => {
+    signInWithPopup(auth, provider)
+      .then(result => {
+        document.getElementById("user").innerText =
+          "Xin chào " + result.user.displayName;
+      })
+      .catch(err => alert(err.message));
+  };
+</script>
 
 </body>
 </html>
